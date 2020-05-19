@@ -2,7 +2,7 @@
 
 ip link set wlan0 down
 ifconfig wlan0 hw ether 00:11:22:33:44:55
-airmon-ng check kill
+airmon-ng check kill >/dev/null
 iw dev wlan0 set type monitor
 ip link set wlan0 up
 
