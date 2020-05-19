@@ -1,6 +1,6 @@
 #/bin/bash
 #
-# Preconfig for enable monitor monde and new mac addres using external wifi card
+# Presettings for enable monitor monde and new mac addres using external wifi card
 # Default new mac=00:11:22:33:44:55 / Default interface name=wlan0
 # Vesion 1.0
 # Everkadaver

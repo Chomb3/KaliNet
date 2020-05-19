@@ -5,8 +5,10 @@
 
 card=wlan0
 
-ip link dev $card down
-iw dev wlan0 set type auto
-ip link dev wlan0 up
+ip link set $card down
+iw dev wlan0 set type  managed
+ip link set wlan0 up
 
 service network-manager start
+
+echo "Networking settings restarted!"
