@@ -1,20 +1,19 @@
 #/bin/bash
 #
-# Presettings for enable monitor monde and new mac addres using external wifi card
-# Default new mac=00:11:22:33:44:55 / Default interface name=wlan0
+# Pre-settings for enable monitor monde and new mac addres using external wifi card
 # Vesion 1.0
 # Everkadaver
 
-newmac=00:11:22:33:44:55
-card=wlan0
+card=$(iw dev | grep -w Interface | awk '{print $2}')
+oldmac=$(iw dev | grep -w addr | awk '{print $2}')
 
 ip link set $card down
-ifconfig $card hw ether $newmac
+macchanger -r $card >/dev/null
 airmon-ng check kill >/dev/null
 iw dev $card set type monitor
 ip link set $card up
 
-ip=$(iw dev | grep -w addr | awk '{ print $2}' )
+mac=$(iw dev | grep -w addr | awk '{ print $2}')
 mon=$(iw dev | grep -w type | awk '{print $2}')
 flag=0
 
@@ -29,7 +28,7 @@ else
 
 fi
 
-if [[ $ip = $newmac ]]; then
+if [[ $mac != $oldmac ]]; then
 
 	echo "New MAC = Check!"
 	flag=$flag+1
