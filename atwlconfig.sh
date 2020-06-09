@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 #
 # Pre-settings for enable monitor monde and new mac addres using external wifi card
 # Vesion 1.0
