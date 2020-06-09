@@ -23,20 +23,46 @@ if [ "$hlp" = "yes" -o $# -lt 1 ]; then
         exit 0
 fi
 
+sum=/tmp/Summary.txt
 tot=$(cat $wlist | wc -l)
 output=$out
 
-for (( c=1; c<=$tot; c++ ))
-do
+if [[ -f $sum ]]; then
 
-	char=$(cat $wlist | sed -n ''$c'p' | wc -m )
+	touch $sum
+	flag=$(cat $sum | grep $wlist | wc -l )
 
-	if [[ $char -gt 8 ]]; then
+fi
 
-		cat $wlist | sed -n ''$c'p' >> $output
+if [[ $flag -ge 1 ]]; then
 
-	fi
+	echo  -e "Error: This wordlist has been used before.\nIf you want to delete the Summary, please use 'rm /tmp/Summary.txt'."
 
-done
+else
 
+	for (( c=1; c<=$tot; c++ ))
+	do
+
+		char=$(cat $wlist | sed -n ''$c'p' | wc -m )
+		let por=($c * 100 / $tot)
+
+		BAR='####################################################################################################' 
+
+		if [[ $char -gt 8 ]]; then
+
+			cat $wlist | sed -n ''$c'p' >> $output
+                	echo -ne "${BAR::$por}"'['$c']               ['$tot' - '$por'%]\r'
+
+		else
+
+			echo -ne "${BAR::$por}"'['$c']               ['$tot' - '$por'%]\r'
+
+		fi
+
+	done
+
+	echo $wlist >> $sum
+	echo \n
+
+fi
 
